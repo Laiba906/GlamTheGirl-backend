@@ -7,26 +7,24 @@ const mongoose = require("mongoose");
 let salon = require('../models/salon.model');
 
 // Add Bus
-SalonRoute.route('/createSalon').post((req, res, next) => {
-    salon.create(req.body, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
+SalonRoute.route('/createSalon').post(async (req, res, next) => {
+    try {
+        const newSalon = await salon.create(req.body); // Use async/await
+        res.status(201).json(newSalon);
+    } catch (error) {
+        next(error); // Pass the error to error-handling middleware
     }
-  })
 });
 
 // Get All Bus
-SalonRoute.route('/getAllSalons').get((req, res) => {
-    salon.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
+SalonRoute.route('/getAllSalons').get(async (req, res, next) => {
+    try {
+        const salons = await salon.find(); // Use async/await
+        res.status(200).json(salons);
+    } catch (error) {
+        next(error); // Pass the error to error-handling middleware
     }
-  })
-})
+});
 
 // Get single Bus
 // BusRoute.route('/readBus/:id').get((req, res) => {
