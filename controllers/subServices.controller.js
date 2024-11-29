@@ -6,27 +6,24 @@ const mongoose = require("mongoose");
 // Bus model
 let subServices = require('../models/subServices.model');
 
-// Add Bus
-SubServicesRoute.route('/createSubServices').post((req, res, next) => {
-    subServices.create(req.body, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
+SubServicesRoute.route('/createSubServices').post(async (req, res, next) => {
+  try {
+      const newSalon = await subServices.create(req.body); // Use async/await
+      res.status(201).json(newSalon);
+  } catch (error) {
+      next(error); // Pass the error to error-handling middleware
+  }
 });
 
 // Get All Bus
-SubServicesRoute.route('/getAllSubServices').get((req, res) => {
-    subServices.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
-})
+SubServicesRoute.route('/getAllSubServices').get(async (req, res, next) => {
+  try {
+      const service = await subServices.find(); // Use async/await
+      res.status(200).json(service);
+  } catch (error) {
+      next(error); // Pass the error to error-handling middleware
+  }
+});
 
 // Get single Bus
 // BusRoute.route('/readBus/:id').get((req, res) => {
