@@ -26,15 +26,17 @@ ServicesRoute.route('/getAllServices').get(async (req, res, next) => {
 });
 
 // Get single Bus
-// BusRoute.route('/readBus/:id').get((req, res) => {
-//     bus.findById(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// })
+ServicesRoute.route('/getAllServices/:salonId').get(async (req, res, next) => {
+  try {
+    // Query the 'Service' collection to find services by salon_id
+    const data = await services.find({ salon: req.params.salonId });
+    res.json(data); // Return the list of services as JSON response
+  } catch (error) {
+    next(error); // If error occurs, pass it to the error handler
+  }
+});
+
+
 
 
 // Update Bus

@@ -25,16 +25,16 @@ SubServicesRoute.route('/getAllSubServices').get(async (req, res, next) => {
   }
 });
 
-// Get single Bus
-// BusRoute.route('/readBus/:id').get((req, res) => {
-//     bus.findById(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// })
+SubServicesRoute.route('/getAllSubServices/:salonId/:serviceId').get(async (req, res, next) => {
+  try {
+    // Query the 'SubService' collection to find subservices by salon_id and service_id
+    const data = await subServices.find({ salon_id: req.params.salonId, service_id: req.params.serviceId });
+    res.json(data); // Return the list of subservices as JSON response
+  } catch (error) {
+    next(error); // If error occurs, pass it to the error handler
+  }
+});
+
 
 
 // Update Bus
